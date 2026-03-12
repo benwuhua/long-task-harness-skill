@@ -7,6 +7,8 @@ Creates the deterministic scaffold artifacts needed for multi-session agent work
 - task-progress.md (empty progress log)
 - RELEASE_NOTES.md (living release notes, Keep a Changelog format)
 - CLAUDE.md (appended with long-task workflow reference for cross-session continuity)
+- docs/runbooks/README.md (placeholder for diagnosis and recovery procedures)
+- artifacts/README.md (placeholder for logs, screenshots, traces, and reports)
 - examples/ directory with README.md (runnable examples for completed features)
 - scripts/ directory (for validate_features.py, check_configs.py, check_devtools.py)
 - docs/plans/ directory (for design docs and implementation plans)
@@ -211,6 +213,24 @@ _Add a new row to this table each time you create an example for a completed fea
 """
 
 
+def create_runbooks_readme() -> str:
+    return """# Runbooks
+
+This directory is reserved for diagnosis and recovery runbooks.
+
+Add one markdown file per recurring failure mode, recovery workflow, or operational procedure that future workers should be able to follow without oral context.
+"""
+
+
+def create_artifacts_readme() -> str:
+    return """# Artifacts
+
+This directory stores durable engineering artifacts such as logs, screenshots, traces, and reports.
+
+Use subdirectories and descriptive filenames so future workers can find the evidence that supports a diagnosis, verification step, or status change.
+"""
+
+
 
 def main():
     parser = argparse.ArgumentParser(description="Initialize a long-task project")
@@ -346,6 +366,22 @@ def main():
         shutil.copy2(st_template_src, st_template_dst)
         print(f"Copied: st-case-template.md -> {templates_dir}")
 
+    # docs/runbooks dir + README.md
+    runbooks_dir = os.path.join(out_dir, "docs", "runbooks")
+    os.makedirs(runbooks_dir, exist_ok=True)
+    runbooks_readme = os.path.join(runbooks_dir, "README.md")
+    with open(runbooks_readme, "w", encoding="utf-8") as f:
+        f.write(create_runbooks_readme())
+    print(f"Created: {runbooks_readme}")
+
+    # artifacts dir + README.md
+    artifacts_dir = os.path.join(out_dir, "artifacts")
+    os.makedirs(artifacts_dir, exist_ok=True)
+    artifacts_readme = os.path.join(artifacts_dir, "README.md")
+    with open(artifacts_readme, "w", encoding="utf-8") as f:
+        f.write(create_artifacts_readme())
+    print(f"Created: {artifacts_readme}")
+
     # examples dir + README.md
     examples_dir = os.path.join(out_dir, "examples")
     os.makedirs(examples_dir, exist_ok=True)
@@ -355,7 +391,7 @@ def main():
     print(f"Created: {examples_readme}")
 
     print(f"\nProject '{args.project_name}' initialized at {out_dir}")
-    print("Created: feature-list.json, CLAUDE.md, AGENTS.md, task-progress.md, RELEASE_NOTES.md, examples/, scripts/ (with helper scripts), docs/plans/, docs/test-cases/, docs/templates/")
+    print("Created: feature-list.json, CLAUDE.md, AGENTS.md, task-progress.md, RELEASE_NOTES.md, examples/, scripts/ (with helper scripts), docs/plans/, docs/test-cases/, docs/templates/, docs/runbooks/, artifacts/")
     print("TODO (LLM generates during Initializer phase):")
     print("  - long-task-guide.md         (tailored Worker guide from SKILL.md + references + design doc)")
     print("  - init.sh / init.ps1         (environment bootstrap from design doc tech stack)")

@@ -40,6 +40,8 @@ def test_creates_all_artifacts():
             "AGENTS.md",
             "task-progress.md",
             "RELEASE_NOTES.md",
+            os.path.join("docs", "runbooks", "README.md"),
+            os.path.join("artifacts", "README.md"),
             os.path.join("examples", "README.md"),
         ]
         for f in expected_files:
@@ -48,8 +50,10 @@ def test_creates_all_artifacts():
 
         expected_dirs = [
             "scripts",
+            "artifacts",
             "examples",
             os.path.join("docs", "plans"),
+            os.path.join("docs", "runbooks"),
         ]
         for d in expected_dirs:
             path = os.path.join(tmp, d)
@@ -120,6 +124,37 @@ def test_examples_dir_created():
         with open(readme, "r", encoding="utf-8") as f:
             content = f.read()
         assert "test-project" in content
+    finally:
+        shutil.rmtree(tmp)
+
+
+def test_runbooks_readme_created():
+    """docs/runbooks/README.md should be created as a harness structure marker."""
+    tmp = tempfile.mkdtemp()
+    try:
+        run_init("test-project", tmp)
+        readme = os.path.join(tmp, "docs", "runbooks", "README.md")
+        assert os.path.exists(readme)
+        with open(readme, "r", encoding="utf-8") as f:
+            content = f.read()
+        assert "runbook" in content.lower()
+        assert "diagnosis" in content.lower() or "recovery" in content.lower()
+    finally:
+        shutil.rmtree(tmp)
+
+
+def test_artifacts_readme_created():
+    """artifacts/README.md should be created as a harness evidence marker."""
+    tmp = tempfile.mkdtemp()
+    try:
+        run_init("test-project", tmp)
+        readme = os.path.join(tmp, "artifacts", "README.md")
+        assert os.path.exists(readme)
+        with open(readme, "r", encoding="utf-8") as f:
+            content = f.read()
+        lowered = content.lower()
+        assert "artifact" in lowered
+        assert any(word in lowered for word in ("log", "screenshot", "trace", "report"))
     finally:
         shutil.rmtree(tmp)
 
@@ -444,6 +479,8 @@ if __name__ == "__main__":
         test_scripts_dir_created,
         test_docs_plans_dir_created,
         test_examples_dir_created,
+        test_runbooks_readme_created,
+        test_artifacts_readme_created,
         test_feature_list_has_tech_stack,
         test_feature_list_has_quality_gates,
         test_feature_list_has_required_configs,
