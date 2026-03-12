@@ -33,6 +33,7 @@ You MUST create a TodoWrite task for each step and complete them in order:
    - `<language>` — one of `python|java|typescript|c|cpp` from the design doc tech stack
    - Use `--line-cov`, `--branch-cov`, `--mutation-score` to override thresholds (defaults: 90/80/80)
    - Creates deterministic scaffold: `feature-list.json`, `CLAUDE.md` (appended), `task-progress.md`, `RELEASE_NOTES.md`, `examples/`, `docs/plans/`, `docs/runbooks/README.md`, `artifacts/README.md`
+   - Creates standard evidence layout under `artifacts/`: `logs/`, `reports/`, `screenshots/`, `traces/`, `reproductions/`, each with a `README.md` placeholder
    - `docs/runbooks/README.md` and `artifacts/README.md` are harness structure markers, not complete project-specific operational docs
    - Later initializer steps still generate project-specific docs such as `long-task-guide.md`, `env-guide.md`, `init.sh` / `init.ps1`, and concrete runbooks where the design requires them
    - Auto-copies helper scripts (`validate_features.py`, `check_configs.py`, `check_devtools.py`, `check_real_tests.py`, `validate_guide.py`, `get_tool_commands.py`, `validate_st_cases.py`, `validate_increment_request.py`, `check_st_readiness.py`) into project `scripts/`
