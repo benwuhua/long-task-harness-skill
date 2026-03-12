@@ -391,10 +391,15 @@ def main():
     print(f"Created: {examples_readme}")
 
     print(f"\nProject '{args.project_name}' initialized at {out_dir}")
-    print("Created: feature-list.json, CLAUDE.md, AGENTS.md, task-progress.md, RELEASE_NOTES.md, examples/, scripts/ (with helper scripts), docs/plans/, docs/test-cases/, docs/templates/, docs/runbooks/, artifacts/")
-    print("TODO (LLM generates during Initializer phase):")
+    print("Created deterministic scaffold:")
+    print("  - feature-list.json, CLAUDE.md, AGENTS.md, task-progress.md, RELEASE_NOTES.md")
+    print("  - examples/, scripts/ (with helper scripts), docs/plans/, docs/test-cases/, docs/templates/")
+    print("  - docs/runbooks/ and artifacts/ as harness structure markers")
+    print("Still to generate during Initializer phase:")
     print("  - long-task-guide.md         (tailored Worker guide from SKILL.md + references + design doc)")
+    print("  - env-guide.md               (project-specific service lifecycle or environment guide)")
     print("  - init.sh / init.ps1         (environment bootstrap from design doc tech stack)")
+    print("  - project-specific runbooks  (when the design requires diagnosis or recovery procedures)")
 
 
 if __name__ == "__main__":

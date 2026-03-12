@@ -465,7 +465,11 @@ def test_stdout_mentions_llm_todo():
     tmp = tempfile.mkdtemp()
     try:
         _, stdout, _ = run_init("test-project", tmp)
+        assert "deterministic scaffold" in stdout, "Should distinguish deterministic scaffold output"
+        assert "docs/runbooks/" in stdout, "Should mention runbooks scaffold marker"
+        assert "artifacts/" in stdout, "Should mention artifacts scaffold marker"
         assert "long-task-guide.md" in stdout, "Should mention guide as LLM TODO"
+        assert "env-guide.md" in stdout, "Should mention env guide as later-generated doc"
         assert "init.sh" in stdout, "Should mention init.sh as LLM TODO"
     finally:
         shutil.rmtree(tmp)
