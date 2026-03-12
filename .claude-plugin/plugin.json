@@ -1,0 +1,13 @@
+{
+  "name": "long-task",
+  "description": "Standalone long-task workflow for multi-session software engineering on Claude Code",
+  "version": "1.0.0",
+  "author": {
+    "name": "benwuhua",
+    "email": ""
+  },
+  "homepage": "https://github.com/benwuhua/long-task-harness-skill",
+  "repository": "https://github.com/benwuhua/long-task-harness-skill",
+  "license": "MIT",
+  "keywords": ["long-task", "skills", "workflow", "tdd", "claude-code", "opencode", "codex"]
+}

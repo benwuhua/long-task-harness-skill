@@ -1,0 +1,20 @@
+{
+  "name": "long-task-harness-skill",
+  "description": "Marketplace for the standalone long-task workflow distribution",
+  "owner": {
+    "name": "benwuhua",
+    "email": ""
+  },
+  "plugins": [
+    {
+      "name": "long-task",
+      "description": "Standalone long-task workflow for multi-session software engineering on Claude Code",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "benwuhua",
+        "email": ""
+      }
+    }
+  ]
+}
