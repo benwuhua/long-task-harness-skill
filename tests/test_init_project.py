@@ -41,6 +41,8 @@ def test_creates_all_artifacts():
             "task-progress.md",
             "RELEASE_NOTES.md",
             os.path.join("docs", "runbooks", "README.md"),
+            os.path.join("docs", "runbooks", "INDEX.md"),
+            os.path.join("docs", "runbooks", "TOPICS.md"),
             os.path.join("artifacts", "README.md"),
             os.path.join("artifacts", "logs", "README.md"),
             os.path.join("artifacts", "reports", "README.md"),
@@ -150,6 +152,29 @@ def test_runbooks_readme_created():
             content = f.read()
         assert "runbook" in content.lower()
         assert "diagnosis" in content.lower() or "recovery" in content.lower()
+    finally:
+        shutil.rmtree(tmp)
+
+
+def test_runbook_index_files_created():
+    """docs/runbooks should include index files that describe expected runbook coverage."""
+    tmp = tempfile.mkdtemp()
+    try:
+        run_init("test-project", tmp)
+        index_path = os.path.join(tmp, "docs", "runbooks", "INDEX.md")
+        topics_path = os.path.join(tmp, "docs", "runbooks", "TOPICS.md")
+        assert os.path.exists(index_path), "Missing docs/runbooks/INDEX.md"
+        assert os.path.exists(topics_path), "Missing docs/runbooks/TOPICS.md"
+
+        with open(index_path, "r", encoding="utf-8") as f:
+            index_content = f.read().lower()
+        assert "index" in index_content or "list" in index_content
+        assert "runbook" in index_content
+
+        with open(topics_path, "r", encoding="utf-8") as f:
+            topics_content = f.read().lower()
+        for keyword in ("startup", "diagnosis", "recovery", "dependency", "reproduction"):
+            assert keyword in topics_content, f"TOPICS.md should mention {keyword}"
     finally:
         shutil.rmtree(tmp)
 
@@ -518,6 +543,7 @@ if __name__ == "__main__":
         test_docs_plans_dir_created,
         test_examples_dir_created,
         test_runbooks_readme_created,
+        test_runbook_index_files_created,
         test_artifacts_readme_created,
         test_artifact_subdir_readmes_created,
         test_feature_list_has_tech_stack,

@@ -8,6 +8,7 @@ Creates the deterministic scaffold artifacts needed for multi-session agent work
 - RELEASE_NOTES.md (living release notes, Keep a Changelog format)
 - CLAUDE.md (appended with long-task workflow reference for cross-session continuity)
 - docs/runbooks/README.md (placeholder for diagnosis and recovery procedures)
+- docs/runbooks/INDEX.md and TOPICS.md (runbook structure markers, not concrete runbooks)
 - artifacts/README.md (placeholder for logs, screenshots, traces, and reports)
 - artifacts/*/README.md (placeholders for logs, reports, screenshots, traces, and reproductions)
 - examples/ directory with README.md (runnable examples for completed features)
@@ -220,7 +221,37 @@ def create_runbooks_readme() -> str:
 
 This directory is reserved for diagnosis and recovery runbooks.
 
+Use `INDEX.md` to list concrete runbooks as they are added.
+Use `TOPICS.md` to track the expected runbook themes for this project.
 Add one markdown file per recurring failure mode, recovery workflow, or operational procedure that future workers should be able to follow without oral context.
+"""
+
+
+def create_runbook_index() -> str:
+    return """# Runbook Index
+
+List concrete runbooks here as they are written for this project.
+
+Suggested format:
+
+- `startup-<service>.md` — startup and bootstrapping procedure
+- `recovery-<failure-mode>.md` — recovery and reset procedure
+- `diagnosis-<issue>.md` — triage and diagnosis procedure
+
+Use `docs/templates/runbook-template.md` when creating a new project-specific runbook.
+"""
+
+
+def create_runbook_topics() -> str:
+    return """# Runbook Topics
+
+This file tracks suggested runbook themes for the project. These are topic prompts, not completed runbooks.
+
+- startup / bootstrapping
+- diagnosis / triage
+- recovery / reset
+- dependency outage
+- seeded reproduction
 """
 
 
@@ -412,6 +443,14 @@ def main():
     with open(runbooks_readme, "w", encoding="utf-8") as f:
         f.write(create_runbooks_readme())
     print(f"Created: {runbooks_readme}")
+    runbook_index = os.path.join(runbooks_dir, "INDEX.md")
+    with open(runbook_index, "w", encoding="utf-8") as f:
+        f.write(create_runbook_index())
+    print(f"Created: {runbook_index}")
+    runbook_topics = os.path.join(runbooks_dir, "TOPICS.md")
+    with open(runbook_topics, "w", encoding="utf-8") as f:
+        f.write(create_runbook_topics())
+    print(f"Created: {runbook_topics}")
 
     # artifacts dir + README.md
     artifacts_dir = os.path.join(out_dir, "artifacts")
@@ -442,7 +481,7 @@ def main():
     print("Created deterministic scaffold:")
     print("  - feature-list.json, CLAUDE.md, AGENTS.md, task-progress.md, RELEASE_NOTES.md")
     print("  - examples/, scripts/ (with helper scripts), docs/plans/, docs/test-cases/, docs/templates/")
-    print("  - docs/runbooks/ and artifacts/ as harness structure markers")
+    print("  - docs/runbooks/ with README.md, INDEX.md, and TOPICS.md as runbook structure markers")
     print("  - artifacts/logs/, reports/, screenshots/, traces/, reproductions/ with README placeholders")
     print("Still to generate during Initializer phase:")
     print("  - long-task-guide.md         (tailored Worker guide from SKILL.md + references + design doc)")
