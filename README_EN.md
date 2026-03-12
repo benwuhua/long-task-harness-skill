@@ -42,6 +42,22 @@ Tell Codex:
 Fetch and follow instructions from https://raw.githubusercontent.com/benwuhua/long-task-harness-skill/main/.codex/INSTALL.md
 ```
 
+## Harness Engineering
+
+`long-task-harness-skill` is not just a skill distribution repository. It treats the repo-local harness as a first-class product so agent work depends on commands, runbooks, evidence paths, and templates inside the repository instead of oral context.
+
+The repository surface now exposes these entrypoints directly:
+
+- [Harness Engineering Guide](docs/HARNESS_ENGINEERING.md)
+- `docs/templates/env-guide-template.md`
+- `docs/templates/long-task-guide-template.md`
+- `docs/templates/runbook-template.md`
+- `docs/templates/artifacts-readme-template.md`
+- `docs/runbooks/README.md`
+- `artifacts/README.md`
+
+The point of this structure is simple: a user opening the repo should immediately see how to bootstrap the environment, recover from failures, store evidence, and keep agent workflows grounded in repo-local assets.
+
 ## Usage
 
 After installation, describe the project you want to build and mention `long-task` if you want to be explicit.
@@ -80,7 +96,9 @@ Claude Code also exposes shortcut commands:
 - `.claude-plugin/`: Claude marketplace metadata
 - `.opencode/plugins/`: OpenCode plugin assets
 - `.codex/INSTALL.md`: Codex install entrypoint
-- `docs/`: platform guides and templates
+- `docs/`: platform guides, harness docs, and templates
+- `docs/runbooks/`: diagnosis and recovery runbooks
+- `artifacts/`: logs, screenshots, traces, and verification evidence
 - `tests/`: Python verification tests
 
 ## Core Capabilities

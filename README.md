@@ -42,6 +42,22 @@ irm https://raw.githubusercontent.com/benwuhua/long-task-harness-skill/main/inst
 Fetch and follow instructions from https://raw.githubusercontent.com/benwuhua/long-task-harness-skill/main/.codex/INSTALL.md
 ```
 
+## Harness Engineering
+
+`long-task-harness-skill` 不是只分发技能文件的仓库。它把 repo-local harness 当成一等产物，让 agent 的工作依赖仓库里的命令、runbook、evidence 和模板，而不是口头上下文。
+
+仓库表层直接提供这些入口：
+
+- [Harness Engineering 说明](docs/HARNESS_ENGINEERING.md)
+- `docs/templates/env-guide-template.md`
+- `docs/templates/long-task-guide-template.md`
+- `docs/templates/runbook-template.md`
+- `docs/templates/artifacts-readme-template.md`
+- `docs/runbooks/README.md`
+- `artifacts/README.md`
+
+这套结构的目标是让用户打开仓库就能看见：如何启动环境、如何恢复故障、证据放在哪里、worker 会依赖哪些 repo-local 资产继续工作。
+
 ## 使用方式
 
 安装完成后，直接告诉 agent 你想构建什么，或显式提到 `long-task`。
@@ -80,7 +96,9 @@ Claude Code 还支持快捷命令：
 - `.claude-plugin/`：Claude marketplace 元数据
 - `.opencode/plugins/`：OpenCode 插件
 - `.codex/INSTALL.md`：Codex 安装入口
-- `docs/`：平台说明与模板
+- `docs/`：平台说明、Harness Engineering 文档与模板
+- `docs/runbooks/`：诊断与恢复 runbook
+- `artifacts/`：日志、截图、trace、测试证据的约定位置
 - `tests/`：Python 验证测试
 
 ## 核心能力
